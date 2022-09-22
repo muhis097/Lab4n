@@ -108,19 +108,28 @@ linreg <-setRefClass( Class = "linreg",
                         plot=function(){
                           library(ggplot2)
                           library(gridExtra)
+                          # to calculate y axis dynamically we use below formula
+                          # this function now works for other examples as well
 
-
+                          seperator_vect=as.numeric(rownames(unique(The_fitted_values)))
+                          seperator_vect=append(seperator_vect,length(The_fitted_values))
+                          lismaker=function(moflist)
+                          {return(The_residuals[seperator_vect[moflist]:(seperator_vect[moflist+1]-1)])
+                          }
+                          tlist=lapply(c(1,2,3),lismaker)
+                          medlist=lapply(tlist,median)
+                          Ploty_vector=unlist(medlist)
 
 
                           p1<-ggplot()+
-                            #geom_line(data=data,aes(x=all.vars(formula)[2],y=all.vars(formula)[1]),color="red")+
+                            geom_line(data=data,aes(x=unique(The_fitted_values),y=Ploty_vector),color="red")+
                             geom_point(data=data,aes(x=The_fitted_values,y=The_residuals),shape=1)+
                             ylab("Residuals")+xlab("Fitted values")+
                             labs(title = paste("Residuals vs Fitted values"))+
                             theme(plot.title = element_text(hjust = 0.5))
 
                           p2<-ggplot()+
-                            #geom_line(data=data,aes(x=,y=),color="red")+
+                            geom_line(data=data,aes(x=unique(The_fitted_values),y=sqrt(abs(scale(Ploty_vector)))),color="red")+
                             geom_point(data=data,aes(x=The_fitted_values,y=sqrt(abs(scale(The_residuals)))),shape=1)+
                             ylab(expression(sqrt(abs("Standardized residual"))))+xlab("Fitted values")+
                             labs(title = paste("Scale-Location"))+
@@ -128,7 +137,8 @@ linreg <-setRefClass( Class = "linreg",
 
 
 
-                          return(grid.arrange(p1, p2, ncol = 1))
+                          return(grid.arrange(p1,p2, ncol = 1))
+
                         },
 
                         summary = function () {
@@ -155,3 +165,6 @@ linreg <-setRefClass( Class = "linreg",
                         }
                       )
 )
+#test plot with below codes
+#lmod=linreg$new(Petal.Length ~ Species, data = iris)
+#lmod$plot()
