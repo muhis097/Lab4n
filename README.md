@@ -21,37 +21,62 @@ devtools::install_github("muhis097/Lab4n")
 ```
 
 ## Example
+## Lab 4 Project : Linear Regression in Refrence Class Style
 
-This is a basic example which shows you how to solve a common problem:
+In this package a satisfactory solution for Linear Regression was developed. In order to describe the functionaity of this class, a default data set included in Rstudio namely "Iris" is used. In first Step The main Regression model is coded. The end user can access internal method in various ways:
 
-``` r
-library(Lab4)
-## basic example code
+```{r , echo=FALSE}
+data("iris")
+lmod=linreg$new(Petal.Length ~ Species, data = iris)
+
+print(lmod)
+
+
+```
+### print
+print function simply output the result of regression in a nice way:
+
+```{r 3 print}
+lmod$print()
+```
+### Resid
+
+The resid function shows the residuals as numeric vector.
+
+```{r Resid}
+lmod$resid()
+
+```
+### Pred
+
+The Pred function return the predicted values of "y".
+
+```{r pred}
+
+lmod$pred()
+
+```
+### Coef
+The coef function return the coecients as a named vector:
+
+```{r coef}
+lmod$coef()
+```
+### plot
+
+The plot function shows the figure of The_fitted_valuesvs The_residuals in two modes 1- normal plot  2- Standardized plot(apllied scaling)
+
+```{r Plot}
+lmod$plot()
+
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
+### Summary
 
-``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
+This function return a similar printout as printed for lm objects, but here only the coefficients with their standard error, t-value and p-value as well as the estimate of σ and the degrees of freedom in the model is shown:
+
+```{r Summary}
+
+lmod$summary()
+
 ```
-
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this. You could also
-use GitHub Actions to re-render `README.Rmd` every time you push. An
-example workflow can be found here:
-<https://github.com/r-lib/actions/tree/v1/examples>.
-
-You can also embed plots, for example:
-
-<img src="man/figures/README-pressure-1.png" width="100%" />
-
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
