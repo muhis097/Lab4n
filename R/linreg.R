@@ -137,7 +137,7 @@ linreg <-setRefClass( Class = "linreg",
 
 
 
-                          return(grid.arrange(p1,p2, ncol = 1))
+                          return(grid.arrange(p1,p2, nrow= 2))
 
                         },
 
