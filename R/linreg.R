@@ -15,6 +15,8 @@
 #' @field The_t_values matrix.
 #'
 #' @import methods
+#' @import ggplot2
+#' @import gridExtra
 #'
 #' @export linreg
 #' @exportClass linreg
